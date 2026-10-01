@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>W.M.P — Warehouse Management Platform</title>
+<link rel="icon" type="image/png" href="assets/logo-tigalapan.png">
+<style>
+:root{--bg:#f4f7fa;--card:#fff;--ink:#18334b;--muted:#63788b;--line:#dbe5ed;--people:#6853b9;--wms:#1675bd;--wos:#087e5b;--brand:#b5532a}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b26;--card:#16283a;--ink:#e6eef6;--muted:#9bb0c3;--line:#26405a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+main{max-width:980px;margin:0 auto;padding:40px 16px 56px}
+header{text-align:center;margin-bottom:28px}
+header img{width:100%;max-width:300px;height:auto}
+h1{margin:14px 0 4px;font-size:clamp(24px,5vw,34px)}
+.sub{color:var(--muted);margin:0}
+.badge{display:inline-block;margin-top:14px;padding:4px 12px;border-radius:999px;background:#fff1d7;color:#a95f00;font-size:13px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:28px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;border-top:4px solid var(--c)}
+.card h2{margin:0 0 6px;font-size:18px;color:var(--c)}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card ul{margin:10px 0 0;padding-left:18px;font-size:14px}
+.foot{margin-top:32px;text-align:center;color:var(--muted);font-size:14px}
+a{color:var(--wms)}
+</style>
+</head>
+<body>
+<main>
+ <header>
+  <img src="assets/logo-tigalapan.png" alt="Tigalapan Indonesia" width="1080" height="436">
+  <h1>W.M.P — Warehouse Management Platform</h1>
+  <p class="sub">Satu sistem, semua proses, data terpusat — gudang DC 38</p>
+  <span class="badge">Dalam perancangan</span>
+ </header>
+ <section class="grid" aria-label="Modul platform">
+  <article class="card" style="--c:var(--people)"><h2>People</h2><p>Karyawan, peran, shift, presensi, penugasan, performance.</p><ul><li>Employee &amp; User</li><li>Attendance, lembur &amp; SPL</li><li>Performance</li></ul></article>
+  <article class="card" style="--c:var(--wms)"><h2>WMS</h2><p>Data induk, stok, lokasi, aturan, dan jejak audit.</p><ul><li>Inventory &amp; lokasi/bin</li><li>FIFO &amp; rekomendasi lokasi</li><li>Transfer, adjustment, opname</li></ul></article>
+  <article class="card" style="--c:var(--wos)"><h2>WOS</h2><p>Eksekusi operasional di lapangan lewat tablet.</p><ul><li>Receiving &amp; putaway</li><li>Picking, packing, loading</li><li>Monitoring real-time</li></ul></article>
+  <article class="card" style="--c:var(--brand)"><h2>Integrasi &amp; Dokumen</h2><p>Penghubung dengan PPIC, intransit, dan MOKA.</p><ul><li>Upload SOQ &amp; intransit</li><li>Lembar transfer MOKA</li><li>STTB &amp; SPL</li></ul></article>
+ </section>
+ <p class="foot">Aplikasi operasional yang berjalan saat ini: <a href="https://w-o-s-tigalapan-project.vercel.app">W.O.S Tigalapan</a></p>
+</main>
+</body>
+</html>
