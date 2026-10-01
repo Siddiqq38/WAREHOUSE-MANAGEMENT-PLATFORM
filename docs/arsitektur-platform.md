@@ -27,6 +27,21 @@ Aliran data:
 - **WOS → WMS:** setiap eksekusi (terima, simpan, ambil, kirim) menulis pergerakan stok dengan jam asli.
 - **Semua modul → Audit Trail.**
 
+## 1a. Peran W.M.P: pusat pencatatan dan aktivitas gudang
+W.M.P bukan sekadar portal web. W.M.P adalah **sistem pencatatan utama (system of record)** sekaligus **pusat aktivitas** gudang DC 38. WMS dan WOS saling terhubung melalui People/Employee, sehingga setiap kegiatan gudang tercatat lengkap: apa yang terjadi, siapa operatornya, dan kapan.
+
+**Yang dicatat di modul WMS (transaksi dan aktivitas gudang):**
+- Seluruh transaksi **inbound** (intransit, GR, counting, selisih, put away) dan **outbound** (SOQ, picking, VP, packing, loading, STTB).
+- **Relokasi** antar bin (membawa tanggal masuk asli untuk FIFO).
+- **Cycle count** dan stock opname, beserta selisih dan penyesuaiannya.
+- Adjustment, transfer, dan kegiatan gudang lain; setiap perubahan stok menjadi `stock_movements` dengan jam asli.
+
+**Yang dicatat di modul WOS (penugasan dan eksekusi):**
+- **Pemberian assignment/task per operator**: siapa mendapat tugas apa, dari siapa, kapan diberikan, dan perubahan atau pemindahan tugasnya.
+- **Eksekusi operasional**: jam mulai dan selesai, hasil (qty aktual, selisih, temuan), serta operator yang mengerjakan.
+
+**Penghubung:** setiap tugas WOS merujuk ke Employee (People) dan ke dokumen/pergerakan stok WMS, sehingga satu kejadian dapat ditelusuri dari tugas, operator, sampai perubahan stok. Semua tercatat di Audit Trail.
+
 ## 2. Nama dan modul
 | Modul | Isi |
 |---|---|
@@ -63,6 +78,8 @@ Saat ini hanya **DC 38**. Agar toko atau gudang lain bisa bergabung kelak tanpa 
 - **pick_tasks** (koli, picker, baris, lokasi, qty, ACT, jam mulai dan selesai), **verifications** dan **findings** (Compliance).
 - **shipments** (packing/staging, Load Plan, ekspedisi, tanggal kirim, loading, unloading, STTB).
 - **inbound** (intransit, batch GR, counting, selisih, QC sampling, put away).
+- **task_assignments** (tugas, jenis, operator/employee, pemberi tugas, waktu diberikan, status, riwayat pindah tugas) dan **task_executions** (jam mulai/selesai, qty aktual, hasil, rujukan ke dokumen dan `stock_movements`).
+- **cycle_counts** (jadwal, lokasi/SKU, qty sistem vs hitung, selisih, penyesuaian).
 - **audit_log** (siapa, apa, kapan, nilai sebelum dan sesudah).
 
 ## 6. Aturan operasional yang disepakati
