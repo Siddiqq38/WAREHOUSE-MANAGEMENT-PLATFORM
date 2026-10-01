@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WMS — Master Item | W.M.P</title>
+<link rel="stylesheet" href="assets/wmp.css">
+</head>
+<body style="--c:var(--wms)">
+<main>
+ <a class="crumb" href="wms.html">← WMS</a>
+ <h1>WMS — Master Item</h1>
+ <p class="sub">Daftar item (SKU) beserta kategori dan area penyimpanan yang ditetapkan.</p>
+ <section class="panel">
+  <div class="bar"><input id="q" type="search" placeholder="Cari nama item…" aria-label="Cari"><select id="fc" aria-label="Kategori"></select><select id="fs" aria-label="Area"></select></div>
+  <p class="stats" id="stats"></p>
+  <div class="wrap"><table><thead><tr><th>Kategori</th><th>Nama item</th><th>Area simpan</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div class="pager"><button id="prev">‹</button><span id="pg"></span><button id="next">›</button></div>
+ </section>
+ <p class="note">Sumber: spreadsheet <em>WMS DCTSI 25</em> (disimpan 28 Nov 2025), dibaca apa adanya sebagai data awal. Hanya baca; pembaruan stok akan berjalan lewat transaksi (movement), bukan edit manual.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('id-ID');
+const PER=50;let page=0,list=[];
+let D=[];
+fetch("assets/data/wms-items.json").then(r=>r.json()).then(d=>{D=d;
+ const cats=[...new Set(D.map(x=>x[0]))].sort(),ar=[...new Set(D.map(x=>x[2]))].sort();
+ $("fc").innerHTML="<option value=\"\">Semua kategori</option>"+cats.map(c=>`<option>${esc(c)}</option>`).join("");
+ $("fs").innerHTML="<option value=\"\">Semua area</option>"+ar.map(c=>`<option>${esc(c)}</option>`).join("");
+ apply()}).catch(()=>{$("stats").textContent="Gagal memuat data."});
+function apply(){const q=$("q").value.trim().toLowerCase(),c=$("fc").value,a=$("fs").value;
+ list=D.filter(x=>(!q||x[1].toLowerCase().includes(q))&&(!c||x[0]===c)&&(!a||x[2]===a));page=0;draw()}
+function draw(){const n=list.length,pages=Math.max(1,Math.ceil(n/PER));if(page>=pages)page=pages-1;
+ $("rows").innerHTML=list.slice(page*PER,page*PER+PER).map(x=>`<tr><td>${esc(x[0])}</td><td>${esc(x[1])}</td><td>${esc(x[2])}</td></tr>`).join("")||"<tr><td colspan=3>Tidak ada data.</td></tr>";
+ $("stats").innerHTML=`<span>Tampil <b>${fmt(n)}</b> dari <b>${fmt(D.length)}</b> item</span><span>Kategori <b>${new Set(list.map(x=>x[0])).size}</b></span>`;
+ $("pg").textContent=`Halaman ${page+1} / ${pages}`;$("prev").disabled=page==0;$("next").disabled=page>=pages-1}
+["q","fc","fs"].forEach(i=>$(i).addEventListener("input",apply));
+$("prev").onclick=()=>{page--;draw()};$("next").onclick=()=>{page++;draw()};
+</script>
+</body>
+</html>

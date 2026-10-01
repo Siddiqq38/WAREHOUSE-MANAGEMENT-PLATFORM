@@ -3,173 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>People — Employee | W.M.P</title>
-<style>
-:root{--card:#fff;--ink:#18334b;--muted:#63788b;--line:#dbe5ed;--people:#6853b9;--ok:#087e5b;--bad:#b3261e}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--card:#16283a;--ink:#e6eef6;--muted:#9bb0c3;--line:#26405a}}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#0a1f44;background:linear-gradient(180deg,#1e5bd8 0%,#0b2a63 45%,#000 100%) fixed;color:#fff;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-main{max-width:1100px;margin:0 auto;padding:24px 16px 56px}
-a{color:#8fc1ff}
-h1{margin:8px 0 2px;font-size:clamp(22px,4vw,30px)}
-.sub{margin:0 0 18px;color:#c5d6ee;font-size:14px}
-.panel{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:16px;border-top:4px solid var(--people)}
-.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-.bar input,.bar select{flex:1 1 150px;min-width:0}
-input,select,textarea,button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-button{cursor:pointer;font-weight:600}
-button.pri{background:var(--people);color:#fff;border-color:var(--people)}
-.stats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;font-size:13px;color:var(--muted)}
-.stats b{color:var(--ink)}
-.wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
-tr.off td{opacity:.55}
-.tag{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:600;background:#e9e4f8;color:#4a3a96}
-.tag.on{background:#d9f3ea;color:var(--ok)}.tag.nonaktif{background:#fbe0de;color:var(--bad)}
-dialog{border:0;border-radius:12px;padding:0;width:min(520px,94vw);background:var(--card);color:var(--ink)}
-dialog::backdrop{background:rgba(0,0,0,.6)}
-form{padding:18px;display:grid;gap:12px}
-form h2{margin:0;font-size:18px}
-label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
-label input,label select,label textarea{width:100%}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.err{color:var(--bad);font-size:13px;min-height:1em;margin:0}
-.acts{display:flex;justify-content:flex-end;gap:8px}
-.note{margin-top:12px;font-size:12px;color:#c5d6ee}
-@media(max-width:520px){.row2{grid-template-columns:1fr}}
-</style>
+<title>People | W.M.P</title>
+<link rel="stylesheet" href="assets/wmp.css">
 </head>
-<body>
+<body style="--c:var(--people)">
 <main>
- <a href="index.html">← W.M.P</a>
- <h1>People — Master Employee</h1>
- <p class="sub">Karyawan yang melakukan presensi (finger) di DC 38 Tigalapan.</p>
- <section class="panel">
-  <div class="bar">
-   <input id="q" type="search" placeholder="Cari nama, ID, atau kode staff…" aria-label="Cari">
-   <select id="fk" aria-label="Kategori"></select>
-   <select id="fj" aria-label="Jabatan"></select>
-   <select id="fs" aria-label="Status"><option value="">Semua status</option><option value="AKTIF" selected>Aktif</option><option value="NONAKTIF">Nonaktif</option></select>
-   <button class="pri" id="add">+ Karyawan baru</button>
-   <button id="csv">Ekspor CSV</button>
-  </div>
-  <p class="stats" id="stats"></p>
-  <div class="wrap"><table>
-   <thead><tr><th>ID Karyawan</th><th>Nama</th><th>Kode Staff</th><th>Kategori</th><th>Jabatan</th><th>Status</th><th></th></tr></thead>
-   <tbody id="rows"></tbody>
-  </table></div>
+ <a class="crumb" href="index.html">← W.M.P</a>
+ <h1>People</h1>
+ <p class="sub">Siapa yang masuk kerja hari ini. Sumber kehadiran dan peran untuk penugasan di WOS.</p>
+ <h3 class="sec">Data induk</h3><section class="tiles">
+  <a class="tile" href="people-employee.html"><h2>Employee</h2><p>Master karyawan DC 38 (26 orang): tambah, ubah, nonaktifkan.</p><span class="tag on">Tersedia</span></a>
+  <div class="tile soon"><h2>User &amp; Role</h2><p>Akun login kode staf + PIN, peran dan hak akses.</p><span class="tag soon">Rencana</span></div>
+  <div class="tile soon"><h2>Shift &amp; Rate</h2><p>Shift 1/2, rate, pola hari kerja dan off.</p><span class="tag soon">Rencana</span></div>
+ </section><h3 class="sec">Aktivitas harian</h3><section class="tiles">
+  <div class="tile soon"><h2>Attendance</h2><p>Presensi harian, memilih peran hari itu (mis. Picker), JOTM, approval SPV/MGR.</p><span class="tag soon">Rencana</span></div>
+  <div class="tile soon"><h2>Lembur &amp; SPL</h2><p>Pengajuan, persetujuan, dan nomor SPL otomatis.</p><span class="tag soon">Rencana</span></div>
+  <div class="tile soon"><h2>Cuti &amp; Ijin</h2><p>Cuti, change off, sakit, ijin; wajib ada pengganti/hand over.</p><span class="tag soon">Rencana</span></div>
+ </section><h3 class="sec">Penilaian</h3><section class="tiles">
+  <div class="tile soon"><h2>Performance</h2><p>Produktivitas operator dari jam asli eksekusi di WOS.</p><span class="tag soon">Rencana</span></div>
+  <div class="tile soon"><h2>Compliance &amp; Coaching</h2><p>Temuan Checker per operator dan tindak lanjutnya.</p><span class="tag soon">Rencana</span></div>
  </section>
- <p class="note">Tahap awal: data tersimpan di browser ini (belum di database bersama). Penyimpanan terpusat (Supabase) dan foto menyusul.</p>
 </main>
-
-<dialog id="dlg">
- <form id="f" method="dialog">
-  <h2 id="ft">Karyawan baru</h2>
-  <div class="row2">
-   <label>ID Karyawan<input name="id" required maxlength="20" placeholder="TLI00000"></label>
-   <label>Kode Staff<input name="staff" required maxlength="12" placeholder="W00"></label>
-  </div>
-  <label>Nama lengkap<input name="name" required maxlength="80"></label>
-  <div class="row2">
-   <label>Kategori<select name="cat"></select></label>
-   <label>Status<select name="status"><option value="AKTIF">Aktif</option><option value="NONAKTIF">Nonaktif</option></select></label>
-  </div>
-  <label>Jabatan<input name="job" required maxlength="60" list="jobs"></label>
-  <datalist id="jobs"></datalist>
-  <label>Catatan (opsional)<textarea name="note" rows="2" maxlength="200"></textarea></label>
-  <p class="err" id="err" role="alert"></p>
-  <div class="acts"><button type="button" id="cancel">Batal</button><button class="pri" id="save" type="submit">Simpan</button></div>
- </form>
-</dialog>
-
-<script>
-const KEY='wmp.employees.v1';
-const CATS=['Tetap','Kontrak','Probation'];
-const SEED=[
-['TLI00002','GUSTI ZULKARNAIN TOMPO','PRD01','Tetap','Manager produksi'],
-['TLI00030','AHMAD ASSIDIK','W01','Tetap','Supervisor Warehouse'],
-['TLI00048',"MUHAMMAD SAFI'I",'W03','Kontrak','Operator Warehouse'],
-['TLI00050','HESTIANINGSIH','PCM04','Kontrak','Procurement'],
-['TLI00055','ABDUL HALIK','W04','Kontrak','Operator Warehouse'],
-['TLI00121','ARDHY WAHIDIN','W07','Kontrak','Operator Warehouse'],
-['TLI00136','REZKY NOVITA SAID','W09','Kontrak','Admin warehouse'],
-['TLI00167','YUSRI','W08','Kontrak','Operator Warehouse'],
-['TLI00197','SULQADRI','W17','Kontrak','Operator Warehouse'],
-['TLI00199','JABAL RAHMAT','W19','Kontrak','Operator Warehouse'],
-['TLI00204','RIANG INDRA PRATIWI','W14','Kontrak','Admin warehouse'],
-['TLI00217','MUHRIMAN','PCM02','Kontrak','Procurement'],
-['TLI00225','LAODE SARIF ADAM','W21','Kontrak','Operator Warehouse'],
-['TLI00232','SULDENI','W24','Kontrak','Operator Warehouse'],
-['TLI00242','ZUHDI','W28','Kontrak','Operator Warehouse'],
-['TLI00243','DWI PHILLIDA MUFARRIHAH PUTRI','PCM03','Kontrak','Procurement'],
-['TLI00250','ALIF GUNAWAN','PPIC01','Kontrak','PPIC Staff'],
-['TLI00251','MUHAMMAD FACHRI DHARMAWAN','W29','Kontrak','Operator Warehouse'],
-['TLI00285','MUHAMMAD ADHAN','PPIC02','Kontrak','PPIC Staff'],
-['TLI00302','AL FATHAHILLA JR','PPIC04','Kontrak','PPIC Staff'],
-['TLI00308','MUHAMMAD ANSHAR RAMADHAN','W34','Kontrak','Driver'],
-['TLI00310','MARWAN AGUS','W00','Kontrak','Supply chain manager'],
-['TLI00320','MUH. RYAYYAN ZHAKHI','PPIC03','Kontrak','PPIC Staff'],
-['TLI00326','ADRYANDA MALIK','PCM01','Kontrak','PPIC Supervisor'],
-['TLI00332','ANDI MUHAMMAD AKRAM','W35','Probation','Driver'],
-['TLIF00267','ABD. YANDI SAPUTRA','W36','Kontrak','Operator Warehouse']
-].map(([id,name,staff,cat,job])=>({id,name,staff,cat,job,status:'AKTIF',note:'',wh:'DC38'}));
-
-let data;
-try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!Array.isArray(data)){data=SEED.map(x=>({...x}));persist()}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
-
-const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let editing=null;
-
-function fillFilters(){
-  const jobs=[...new Set(data.map(d=>d.job))].sort();
-  const cur=[$('fk').value,$('fj').value];
-  $('fk').innerHTML='<option value="">Semua kategori</option>'+CATS.map(c=>`<option>${c}</option>`).join('');
-  $('fj').innerHTML='<option value="">Semua jabatan</option>'+jobs.map(j=>`<option>${esc(j)}</option>`).join('');
-  $('fk').value=cur[0]||'';$('fj').value=cur[1]||'';
-  $('jobs').innerHTML=jobs.map(j=>`<option value="${esc(j)}">`).join('');
-}
-function render(){
-  const q=$('q').value.trim().toLowerCase(),k=$('fk').value,j=$('fj').value,s=$('fs').value;
-  const list=data.filter(d=>(!q||[d.id,d.name,d.staff].some(v=>v.toLowerCase().includes(q)))&&(!k||d.cat===k)&&(!j||d.job===j)&&(!s||d.status===s))
-    .sort((a,b)=>a.id.localeCompare(b.id));
-  $('rows').innerHTML=list.map(d=>`<tr class="${d.status==='AKTIF'?'':'off'}"><td>${esc(d.id)}</td><td>${esc(d.name)}</td><td>${esc(d.staff)}</td><td><span class="tag">${esc(d.cat)}</span></td><td>${esc(d.job)}</td><td><span class="tag ${d.status==='AKTIF'?'on':'nonaktif'}">${d.status==='AKTIF'?'Aktif':'Nonaktif'}</span></td><td><button data-id="${esc(d.id)}">Ubah</button></td></tr>`).join('')||'<tr><td colspan="7">Tidak ada data.</td></tr>';
-  const act=data.filter(d=>d.status==='AKTIF').length;
-  $('stats').innerHTML=`<span>Tampil <b>${list.length}</b></span><span>Aktif <b>${act}</b></span><span>Nonaktif <b>${data.length-act}</b></span><span>Total <b>${data.length}</b></span>`;
-}
-function open(d){
-  editing=d?d.id:null;
-  $('ft').textContent=d?'Ubah karyawan':'Karyawan baru';
-  const f=$('f');
-  f.cat.innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');
-  f.id.value=d?d.id:'';f.staff.value=d?d.staff:'';f.name.value=d?d.name:'';
-  f.cat.value=d?d.cat:'Kontrak';f.status.value=d?d.status:'AKTIF';f.job.value=d?d.job:'';f.note.value=d?d.note:'';
-  $('err').textContent='';$('dlg').showModal();
-}
-$('add').onclick=()=>open(null);
-$('cancel').onclick=()=>$('dlg').close();
-$('rows').onclick=e=>{const b=e.target.closest('button[data-id]');if(b)open(data.find(d=>d.id===b.dataset.id))};
-$('f').onsubmit=e=>{
-  e.preventDefault();
-  const f=$('f');
-  const rec={id:f.id.value.trim().toUpperCase(),staff:f.staff.value.trim().toUpperCase(),name:f.name.value.trim().toUpperCase(),cat:f.cat.value,status:f.status.value,job:f.job.value.trim(),note:f.note.value.trim(),wh:'DC38'};
-  const dup=data.find(d=>d.id!==editing&&(d.id===rec.id||d.staff===rec.staff));
-  if(dup){$('err').textContent=dup.id===rec.id?'ID Karyawan sudah dipakai.':'Kode Staff sudah dipakai oleh '+dup.name+'.';return}
-  if(editing){data[data.findIndex(d=>d.id===editing)]=rec}else{data.push(rec)}
-  persist();$('dlg').close();fillFilters();render();
-};
-['q','fk','fj','fs'].forEach(i=>$(i).addEventListener('input',render));
-$('csv').onclick=()=>{
-  const q=v=>'"'+String(v).replace(/"/g,'""').replace(/^([=+\-@])/,"'$1")+'"';
-  const rows=[['ID Karyawan','Nama','Kode Staff','Kategori','Jabatan','Status','Catatan'],...data.map(d=>[d.id,d.name,d.staff,d.cat,d.job,d.status,d.note])];
-  const blob=new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='employee-dc38.csv';a.click();
-};
-fillFilters();render();
-</script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WMS — Lokasi &amp; Stok per Bin | W.M.P</title>
+<link rel="stylesheet" href="assets/wmp.css">
+</head>
+<body style="--c:var(--wms)">
+<main>
+ <a class="crumb" href="wms.html">← WMS</a>
+ <h1>WMS — Lokasi &amp; Stok per Bin</h1>
+ <p class="sub">Setiap bin: item yang tersimpan, saldo, kapasitas, dan status.</p>
+ <section class="panel">
+  <div class="bar"><input id="q" type="search" placeholder="Cari bin atau item…" aria-label="Cari"><select id="fb" aria-label="Blok"></select><select id="fs" aria-label="Status"><option value="">Semua status</option><option>Free</option><option>Full</option><option>Over</option></select><select id="fk" aria-label="Slot"><option value="">Semua slot</option><option>Sloting Utama</option><option>Sloting Cadangan</option></select><select id="fe" aria-label="Isi"><option value="">Terisi &amp; kosong</option><option value="1" selected>Hanya terisi</option><option value="0">Hanya kosong</option></select></div>
+  <p class="stats" id="stats"></p>
+  <div class="wrap"><table><thead><tr><th>Bin</th><th>Blok</th><th>Item</th><th class="n">Bal</th><th class="n">Pcs</th><th class="n">Kapasitas maks</th><th>Status</th><th>Slot</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div class="pager"><button id="prev">‹</button><span id="pg"></span><button id="next">›</button></div>
+ </section>
+ <p class="note">Sumber: spreadsheet <em>WMS DCTSI 25</em> (disimpan 28 Nov 2025), dibaca apa adanya sebagai data awal. Hanya baca; pembaruan stok akan berjalan lewat transaksi (movement), bukan edit manual.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('id-ID');
+const PER=50;let page=0,list=[];
+let D=[];const blok=b=>b.replace(/[.\d].*$/,"")||b;
+fetch("assets/data/wms-bins.json").then(r=>r.json()).then(d=>{D=d;
+ const bl=[...new Set(D.map(x=>blok(x[0])))].sort();
+ $("fb").innerHTML="<option value=\"\">Semua blok</option>"+bl.map(c=>`<option>${esc(c)}</option>`).join("");
+ apply()}).catch(()=>{$("stats").textContent="Gagal memuat data."});
+function apply(){const q=$("q").value.trim().toLowerCase(),b=$("fb").value,s=$("fs").value,k=$("fk").value,e=$("fe").value;
+ list=D.filter(x=>(!q||x[0].toLowerCase().includes(q)||x[1].toLowerCase().includes(q))&&(!b||blok(x[0])===b)&&(!s||x[5]===s)&&(!k||x[6]===k)&&(e===""||(e==="1")===!!x[1]));page=0;draw()}
+function draw(){const n=list.length,pages=Math.max(1,Math.ceil(n/PER));if(page>=pages)page=pages-1;
+ const st=s=>s==="Over"?"bad":s==="Full"?"soon":"on";
+ $("rows").innerHTML=list.slice(page*PER,page*PER+PER).map(x=>`<tr><td>${esc(x[0])}</td><td>${esc(blok(x[0]))}</td><td>${esc(x[1])||"—"}</td><td class="n">${fmt(x[2])}</td><td class="n">${fmt(x[3])}</td><td class="n">${fmt(x[4])}</td><td><span class="tag ${st(x[5])}" style="margin:0">${esc(x[5])}</span></td><td>${esc(x[6])}</td></tr>`).join("")||"<tr><td colspan=8>Tidak ada data.</td></tr>";
+ const sum=k=>list.reduce((a,x)=>a+(x[k]||0),0);
+ $("stats").innerHTML=`<span>Bin <b>${fmt(n)}</b> dari <b>${fmt(D.length)}</b></span><span>Total bal <b>${fmt(sum(2))}</b></span><span>Total pcs <b>${fmt(sum(3))}</b></span><span>Over <b>${list.filter(x=>x[5]==="Over").length}</b></span>`;
+ $("pg").textContent=`Halaman ${page+1} / ${pages}`;$("prev").disabled=page==0;$("next").disabled=page>=pages-1}
+["q","fb","fs","fk","fe"].forEach(i=>$(i).addEventListener("input",apply));
+$("prev").onclick=()=>{page--;draw()};$("next").onclick=()=>{page++;draw()};
+</script>
+</body>
+</html>
